@@ -1,0 +1,16 @@
+{
+  "name": "universe",
+  "version": "1.0.0",
+  "description": "## SD Card Fresh Install",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mosca": "^2.5.1",
+    "mqtt": "^2.9.1"
+  }
+}
