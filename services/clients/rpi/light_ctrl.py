@@ -1,6 +1,8 @@
 # Mqtt
 import paho.mqtt.client as mqtt
 import subprocess
+import json
+
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -12,9 +14,10 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
-    if(payload.action == 'clear'):
+    
+    if(payload['action'] == 'clear'):
         subprocess.call('sudo python ./py_ctrl/clear.py', shell=True)
-    elif(payload.action == 'test'):
+    elif(payload['action'] == 'test'):
         subprocess.call('sudo python ./py_ctrl/test.py', shell=True)
 
 client = mqtt.Client()
