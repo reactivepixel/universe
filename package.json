@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "## SD Card Fresh Install",
   "main": "index.js",
+  "engines": {
+    "node": "v6.11.1",
+    "npm": "3.10.10"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,7 +14,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apex-util": "^2.0.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
     "mosca": "^2.5.1",
     "mqtt": "^2.9.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }

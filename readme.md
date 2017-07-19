@@ -1,72 +1,46 @@
-## Install
+## Data Flow
 
-## SD Card Fresh Install
+### Broker
 
-Assuming OS X install. Based upon the [Official Installation Guide](https://www.raspberrypi.org/documentation/installation/installing-images/mac.md).
+* On Harness (long-term move to app)
 
-1. [Download](https://www.raspberrypi.org/downloads/raspbian/) latest Raspbian Lite Distro
-2. Insert SD Card into the Mac
-3. Find the SD Card's dev diskID with ```df -h```
-4. Unmount the correct disk ```sudo diskutil unmount /dev/disk2s1```
-5. Copy the .img file downloaded (and unzipped if needed). Ensure that you are targeting the correct .img file, the correct /dev/disk (s does not matter) ```sudo dd if=/Users/cchapman/Downloads/2017-07-05-raspbian-jessie-lite.img of=/dev/disk2 bs=1m```
-6. Load SD Card into Pi
-7. Login 'pi'
-8. pwd 'raspberry'
-9. Localization Options - US Keyboard
-10. Advanced Options - Expand File System
-11. Enable SSH
-12. Enable Remote GPIO
-13. reboot
+### Clients
 
+* Web
+* iOS app
+* Android App
 
-Edit the wpa file.
+## Ctrl Rooms
 
-```sudo nano /etc/wpa_supplicant/wpa_supplicant.conf```
+* DeviceCtrl
+* VenueCtrl
+* GroupCtrl
+* MasterCtrl
 
-Configure the file to your network specification
+## Data Structure
 
-```shell
-country=US
-
-network={
-    ssid="NetworkName"
-    psk="NetworkPassword"
+```javascript
+{
+	playlist: {
+		id: 'xxxx-xxxx-xxxx-xxxx',
+    arrangements: [{
+      id: 'xxxx-xxxx-xxxx-xxxx',
+      orderIndex: 0,
+      cycles: 2,
+      principleTrack: {
+        id: 'xxxx-xxxx-xxxx-xxxx',
+        file: '/path/to/file'
+      },
+      tracks: [{
+        id: 'xxxx-xxxx-xxxx-xxxx',
+        position: 0,
+        file: '/path/to/file'
+      }]
+    }]
+	}
 }
 ```
 
-Install git
+# RPI installs
 
-```
-sudo apt-get update && sudo apt-get install git-all -y
-```
-
-Install Docker
-
-```
-curl -sSL https://get.docker.com | sh
-```
-
-Add the docker user to the pi group
-
-```
-sudo usermod -aG docker pi
-```
-
-
-### Install Docker Compose on the RPI
- 
-Based upon the guide defined on the [Getting Docker Compose on RPI](https://www.berthon.eu/2017/getting-docker-compose-on-raspberry-pi-arm-the-easy-way/)
-
-```
-git clone https://github.com/docker/compose.git
-cd compose
-git checkout release
-```
-
-```
-sudo docker build -t docker-compose:armhf -f Dockerfile.armhf .
-```
-
-```
-sudo docker run --rm --entrypoint="script/build/linux-entrypoint" -v $(pwd)/dist:/code/dist -v $(pwd)/.git:/code/.git "docker-compose:armhf"
-```
+* ```sudo pip install paho-mqtt```
