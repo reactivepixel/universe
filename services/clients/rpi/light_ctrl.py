@@ -11,8 +11,11 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
-    subprocess.call('sudo python ./py_ctrl/clear.py', shell=True)
+    payload = json.loads(msg.payload)
+    if(payload.action == 'clear'):
+        subprocess.call('sudo python ./py_ctrl/clear.py', shell=True)
+    elif(payload.action == 'test'):
+        subprocess.call('sudo python ./py_ctrl/test.py', shell=True)
 
 client = mqtt.Client()
 client.on_connect = on_connect
