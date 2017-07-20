@@ -231,7 +231,7 @@ class LEDStrip:
         self.headHistory.insert(0, self.head)
         return True
 
-    def idleStep(self):
+    def renderNextAssignments(self):
         assignments = self.getCurrentStripAssignment()
         self.renderStrip(assignments)
         self.bounceHead()

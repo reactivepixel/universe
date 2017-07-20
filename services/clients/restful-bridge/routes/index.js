@@ -25,14 +25,14 @@ module.exports = (mqClient) => {
     const cmd = { action: 'test' };
 
     safePublish('lobby', JSON.stringify(cmd), mqClient);
-    res.send('confirmed: Clear');
+    res.send('confirmed: test');
   });
 
   router.get('/info', (req, res) => {
     const cmd = { action: 'info' };
 
     safePublish('lobby', JSON.stringify(cmd), mqClient);
-    res.send('confirmed: Clear');
+    res.send('confirmed: info');
   });
 
   return router;

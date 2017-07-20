@@ -9,7 +9,7 @@ class Timeline:
         self.timeDelay = timeDelay # 1sec / 60 frames
         self.looping = True
         self.playing = False
-
+        self.onLoadNextFrameCmds = []
         self.onPlayFrameCmds = []
 
     def runFrameLoop(self):
@@ -46,9 +46,15 @@ class Timeline:
         self.playing = False
         return True
 
+    def registerOnLoadNextFrameCommand(self, cmd):
+        self.onLoadNextFrameCmds.append(cmd)
+        return True
+
     def registerOnPlayCommand(self, cmd):
         self.onPlayFrameCmds.append(cmd)
         return True
+
+
 
     def getInfo(self):
         return {
