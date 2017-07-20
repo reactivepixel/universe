@@ -84,10 +84,10 @@ class LEDStrip:
 
     def clear(self, show=True):
         # Clears buffer for strip, does not write to strip
-        self.stripCtrl.clear()
+        self.ctrl.clear()
 
         # writes clear to strip if supplied
-        if(show): self.stripCtrl.show()
+        self.ctrl.show()
         return self
 
     def genMatrix(self, width=10, height=10, doStaticAlpha=True):

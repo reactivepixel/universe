@@ -1,5 +1,5 @@
-from LEDs.strip import LEDStrip
 from AnimationCtrl.timeline import Timeline
+from LEDs.strip import LEDStrip
 import paho.mqtt.client as mqtt
 import json
 
@@ -11,16 +11,19 @@ stripPixels = 30
 data_pin = 20
 clock_pin = 21
 
+timeline = Timeline()
+
 # Strip Config
 strip = LEDStrip(['g', 'r', 'b'], stripPixels, data_pin, clock_pin)
-imageMatrixIndex, imageMatrix = strip.genImageMatrix('./server/images/60x_24bit_color_test_pattern_rainbow.png');
+strip.initStripGPIO()
+
+imageMatrixIndex, imageMatrix = strip.genImageMatrix('images/60x_24bit_color_test_pattern_rainbow.png');
 strip.setCurrentMatrix(imageMatrixIndex)
 timeline.registerOnPlayCommand(strip.idleStep)
 
 def callback():
     print('Who calls the callbacks?')
 
-timeline = Timeline()
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -36,6 +39,7 @@ def on_message(client, userdata, msg):
     if(payload['action'] == 'clear'):
         # p = subprocess.call('sudo python ./py_ctrl/clear.py', shell=True)
         print('==== Detected ===== Clear')
+        strip.clear()
         timeline.pause()
     elif(payload['action'] == 'test'):
         print('==== Detected ===== Test')
@@ -50,7 +54,7 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("localhost", 1883, 60)
+client.connect("Chapman-MBP.local", 1883, 60)
 
 # while True:
 #     time.sleep(self.rate)
