@@ -2,6 +2,7 @@
 import paho.mqtt.client as mqtt
 import subprocess
 import json
+import time
 
 import os
 import signal
@@ -19,19 +20,25 @@ def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
 
     if(payload['action'] == 'clear'):
-        p = subprocess.call('sudo python ./py_ctrl/clear.py', shell=True)
+        # p = subprocess.call('sudo python ./py_ctrl/clear.py', shell=True)
+        print('==== Detected ===== Clear')
     elif(payload['action'] == 'test'):
-        p = subprocess.call('sudo python ./py_ctrl/test.py', shell=True)
-        os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
+        print('==== Detected ===== Test')
+        # p = subprocess.call('sudo python ./py_ctrl/test.py', shell=True)
+        # os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
 
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("192.168.0.11", 1883, 60)
+client.connect("localhost", 1883, 60)
+
+# while True:
+#     time.sleep(self.rate)
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-client.loop_forever()
+# client.loop_forever()
+client.loop_start()

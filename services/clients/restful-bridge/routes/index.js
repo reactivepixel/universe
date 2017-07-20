@@ -28,6 +28,13 @@ module.exports = (mqClient) => {
     res.send('confirmed: Clear');
   });
 
+  router.get('/info', (req, res) => {
+    const cmd = { action: 'info' };
+
+    safePublish('lobby', JSON.stringify(cmd), mqClient);
+    res.send('confirmed: Clear');
+  });
+
   return router;
 };
 
