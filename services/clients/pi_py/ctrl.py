@@ -3,14 +3,21 @@ from LEDs.ctrl import Ctrl
 import paho.mqtt.client as mqtt
 import json
 
-stripsInfo = [{'ledTotal': 30,'data_pin': 20, 'clock_pin': 21}]
+# green 20, yellow 21
+# Purple 26, Blue 19
 
-timeline = Timeline(1)
+# TODO investigate why 59 works but 60 doesnt
+stripsInfo = [{'ledTotal': 30,'data_pin': 20, 'clock_pin': 21}, {'ledTotal': 59,'data_pin': 26, 'clock_pin': 19}]
+
+timeline = Timeline()
 
 ctrl = Ctrl(stripsInfo)
 
 # Clear on Client Start
 ctrl.clearAndPause(timeline)
+
+#  Auto test
+ctrl.renderImageAsAnimation(timeline)
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -28,7 +35,7 @@ def on_message(client, userdata, msg):
 
     elif(payload['action'] == 'test'):
         print('==== Detected ===== Test')
-
+        # ctrl.clearBufferAll(timeline)
         # Render Test Image
         ctrl.renderImageAsAnimation(timeline)
 

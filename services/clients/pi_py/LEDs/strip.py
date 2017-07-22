@@ -84,8 +84,8 @@ class LEDStrip:
 
     def clear(self, show=True):
         # Clears buffer for strip, does not write to strip
+        self.renderBlankAssignments()
         self.ctrl.clear()
-
         # writes clear to strip if supplied
         self.ctrl.show()
         return self
@@ -209,16 +209,27 @@ class LEDStrip:
     def getCurrentMatrix(self):
         return self.currentMatrix
 
+    def getBlankStripAssignment(self):
+        subMatrix = {}
+        for pixel in range(self.pixels):
+            subMatrix[pixel] = (0, 0, 0, 0)
+
+        return subMatrix
+
+
     def getCurrentMatrixIndex(self):
         return self.currentMatrixIndex
 
     def getCurrentStripAssignment(self):
-        subMatrix = {}
-        for x in range(self.pixels):
-            y = self.head
-            subMatrix[x] = self.currentMatrix[x, y]
+        if self.currentMatrix != {}:
+            subMatrix = {}
+            for x in range(self.pixels):
+                y = self.head
+                subMatrix[x] = self.currentMatrix[x, y]
 
-        return subMatrix
+            return subMatrix
+        else:
+            return False
 
     def getNextStripAssignment(self):
         return False
@@ -233,15 +244,23 @@ class LEDStrip:
 
     def renderNextAssignments(self):
         assignments = self.getCurrentStripAssignment()
+        if assignments:
+            self.renderStrip(assignments)
+            self.bounceHead()
+
+    def renderBlankAssignments(self):
+        assignments = self.getBlankStripAssignment()
         self.renderStrip(assignments)
-        self.bounceHead()
+
+
+
 
     def renderStrip(self, assignments):
-
+        # print(assignments)
         if(self.doGammaCorrect): r, g, b = self.gammaCorrect((r, g, b))
 
         for pixelIndex in assignments:
-            print pixelIndex
+            # print '[T ', time.time(), ']' , pixelIndex
             r,g,b,a = assignments[pixelIndex]
 
             # TODO setup RGB vs GRB Assignments dynamically

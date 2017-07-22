@@ -2,7 +2,7 @@ import time # For heartBeat timing
 import uuid # For IDing the Strips
 
 class Timeline:
-    def __init__(self, timeDelay=0.017):
+    def __init__(self, timeDelay=0.015):
         self.uuid = str(uuid.uuid4())
 
         # Floating Point rate. FPS
@@ -31,6 +31,7 @@ class Timeline:
 
     def playFrame(self):
         if self.playing:
+            # print('Total Play Cmds', self.onPlayFrameCmds)
             for cmd in self.onPlayFrameCmds:
                 cmd()
         return self
@@ -53,6 +54,9 @@ class Timeline:
     def registerOnPlayCommand(self, cmd):
         self.onPlayFrameCmds.append(cmd)
         return True
+
+    def clearOnPlayCommands(self):
+        self.onPlayFrameCmds = []
 
 
 

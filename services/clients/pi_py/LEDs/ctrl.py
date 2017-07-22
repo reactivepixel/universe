@@ -20,8 +20,10 @@ class Ctrl:
         return instance
 
     def renderImageAsAnimation(self, timelineInstance, imgSrc='images/60x_24bit_color_test_pattern_rainbow.png', loadAll=True):
-
+        #  TODO : When Cleared Playhead resets to zero
+        timelineInstance.clearOnPlayCommands()
         if loadAll:
+            print(len(self.strips))
             for strip in self.strips:
                 imageMatrixIndex, imageMatrix = strip['instance'].genImageMatrix(imgSrc);
                 strip['instance'].setCurrentMatrix(imageMatrixIndex)
@@ -32,6 +34,8 @@ class Ctrl:
         for strip in self.strips:
             strip['instance'].clear()
 
+
     def clearAndPause(self, timelineInstance):
+        timelineInstance.clearOnPlayCommands()
         self.clearBufferAll()
-        # timelineInstance.pause()
+        timelineInstance.pause()
