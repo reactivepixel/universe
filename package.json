@@ -17,6 +17,8 @@
     "apex-util": "^2.0.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "hbs": "^4.0.1",
     "mosca": "^2.5.1",
     "mqtt": "^2.9.1"
   },

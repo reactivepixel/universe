@@ -1,7 +1,8 @@
 const mqtt = require('mqtt');
 const express = require('express');
+const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
-
+const path = require('path');
 const util = require('apex-util');
 
 const subRooms = {
@@ -14,14 +15,25 @@ const subRooms = {
 
 // Express Config
 const app = express();
-
 const port = process.env.PORT || 3000;
 
+// Serve Public static files
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
+// Body Parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+app.set('views', 'services/clients/restful-bridge/views/')
+// View Engine: handlebars
+app.engine('handlebars', exphbs({
+  layoutsDir: 'services/clients/restful-bridge/views/',
+  defaultLayout: 'layouts/base',
+  partialsDir: 'services/clients/restful-bridge/views/partials',
+}));
+app.set('view engine', 'handlebars');
 
 // Activate MQTT client
 const mqClient  = mqtt.connect(process.env.MQTT_CONN_STR);
@@ -44,7 +56,10 @@ mqClient.on('message', function (topic, message) {
 })
 
 // Connect mqtt Client to Express
-app.use('/ctrl', require('./routes')(mqClient));
+app.use('/ctrl', require('./routes/api/v1/')(mqClient));
+
+// Connect mqtt Client to Express
+app.use('/', require('./routes/ui/')());
 
 
 // Activate Express Server
