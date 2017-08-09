@@ -1,0 +1,11 @@
+<div class="site-menubar-section">
+  {{#each gauges as |gauge gaugeKey|}}
+    <h5>
+      {{{ gauge.title }}}
+      <span class="float-right">{{{ gauge.value }}}</span>
+    </h5>
+    <div class="progress progress-xs">
+      <div class="progress-bar active {{{ gauge.context }}}" style="width: {{{ gauge.value }}};" role="progressbar"></div>
+    </div>
+  {{/each}}
+</div>

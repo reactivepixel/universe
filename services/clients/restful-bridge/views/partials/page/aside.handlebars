@@ -1,0 +1,35 @@
+<div class="page-aside">
+
+  <div class="page-aside-switch">
+    <i class="icon md-chevron-left" aria-hidden="true"></i>
+    <i class="icon md-chevron-right" aria-hidden="true"></i>
+  </div>
+  <div class="page-aside-inner page-aside-scroll">
+    <div data-role="container">
+      <div data-role="content">
+        {{#each listGroups as |listGroup listGroupKey|}}
+        <section class="page-aside-section">
+          <h5 class="page-aside-title">{{{ listGroup.title }}}</h5>
+          <div class="list-group">
+            {{#each listGroup.items as |item itemKey|}}
+              <a class="list-group-item {{#if item.active}}active{{/if}}" href="{{{item.link}}}"><i class="icon {{{item.icon}}}" aria-hidden="true"></i>{{{item.title}}}</a>
+            {{/each }}
+          </div>
+        </section>
+        {{/each }}
+        <!-- <section class="page-aside-section">
+          <h5 class="page-aside-title">Filter</h5>
+          <div class="list-group">
+            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-image" aria-hidden="true"></i>Images</a>
+            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-volume-up" aria-hidden="true"></i>Audio</a>
+            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-camera" aria-hidden="true"></i>Video</a>
+            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-file" aria-hidden="true"></i>Notes</a>
+            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-link" aria-hidden="true"></i>Links</a>
+            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-file-text" aria-hidden="true"></i>Files</a>
+          </div>
+        </section> -->
+      </div>
+    </div>
+  </div>
+  <!---page-aside-inner-->
+</div>

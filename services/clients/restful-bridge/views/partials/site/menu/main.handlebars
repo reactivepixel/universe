@@ -1,0 +1,13 @@
+<ul class="site-menu" data-plugin="menu">
+  {{#each menus as |category categoryKey|}}
+    <li class="site-menu-category">{{{ category.title }}}</li>
+    {{#each category.items as |item itemKey|}}
+      <li class="site-menu-item">
+        <a class="animsition-link" href="{{{ item.link }}}">
+          <i class="site-menu-icon {{{ item.icon }}}" aria-hidden="true"></i>
+          <span class="site-menu-title">{{{ item.title}}}</span>
+        </a>
+      </li>
+    {{/each}}
+  {{/each}}
+</ul>
