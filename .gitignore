@@ -3,6 +3,7 @@
 node_modules
 */node_modules
 .env
+*.lock
 
 # Compiled python modules.
 *.pyc
